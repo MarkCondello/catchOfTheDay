@@ -6,9 +6,9 @@ export default class StorePicker extends React.Component{
     goToStore = (ev) => {
         ev.preventDefault();
         // get the input entered
-       let val = this.myInput.value.value;
+       let storeName = this.myInput.value.value;
         //change the page to /store. input entered
-        console.log(  this.myInput.value.value);
+        this.props.history.push(`/store/${storeName}`);
     }
 
     render(){
