@@ -2,6 +2,7 @@ import React from "react";
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
+import sampleFishes from '../sample-fishes';
 
 
 export default class App extends React.Component{
@@ -13,13 +14,19 @@ export default class App extends React.Component{
     addFish = (fish) =>{
        // console.log("Adding a fish!", fish);
         //1. grab a copy of the current fish state
-        const fishes ={...this.state.fishes}
+        const NewFish ={...this.state.fishes}
          //2. add our new fish to the fishes variable with a unique id eg `fish${Date.now()}`
         //below we are providing a unique name to newFish and adding the object fish to it.
-         fishes[`fish${Date.now()}`] = fish;
+        NewFish[`fish${Date.now()}`] = fish;
         //3. set the newFish object to state
-        this.setState({fishes : fishes});
+        this.setState({fishes : NewFish});
     };
+
+    loadSampleFishes = () =>{
+        
+        this.setState({fishes : sampleFishes});
+        console.log("Load samples" );
+    }
 
     render(){
         return (
@@ -29,7 +36,7 @@ export default class App extends React.Component{
                  </div>
                
                 <Order/>  
-                <Inventory addFish={this.addFish}/>
+                <Inventory loadSampleFishes={this.loadSampleFishes} addFish={this.addFish}/>
             </div>
         );
     }
