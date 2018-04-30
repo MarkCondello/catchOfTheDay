@@ -505,6 +505,8 @@ ul.order li span.count span {
   margin-bottom: 5px;
   clear: both;
   overflow: hidden;
+  list-style: none;
+
 }
 .menu-fish p {
   margin: 0;
