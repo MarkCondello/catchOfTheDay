@@ -12,7 +12,7 @@ export default class App extends React.Component{
     }
 
     addFish = (fish) =>{
-       // console.log("Adding a fish!", fish);
+        // console.log("Adding a fish!", fish);
         //1. grab a copy of the current fish state
         const NewFish ={...this.state.fishes}
          //2. add our new fish to the fishes variable with a unique id eg `fish${Date.now()}`
@@ -34,21 +34,27 @@ export default class App extends React.Component{
         newOrder[key] = newOrder[key] + 1 || 1;
         //3. Call setState to udpate state object
         this.setState({order: newOrder})
-    }
+    };
 
     render(){
         return (
             <div className="catch-of-the-day">
                 <div className="menu">
                     <Header tagline = {"Fresh Seafood Market"} />
-                    {Object.keys(this.state.fishes).map( item => <Fish 
-                     key={item} 
-                     index={item}
-                     details={this.state.fishes[item]} 
-                     addToOrder={this.addToOrder}
+                    {Object.keys(this.state.fishes).map( item => 
+                    <Fish 
+                        key={item} 
+                        index={item}
+                        details={this.state.fishes[item]} 
+                        addToOrder={this.addToOrder}
                     />)}
-                 </div>   
-                <Order/>  
+                </div> 
+                <div>  
+                      <Order 
+                        fishes = {this.state.fishes}
+                        orders = {this.state.order}
+                    />  
+                </div> 
                 <Inventory loadSampleFishes={this.loadSampleFishes} addFish={this.addFish}/>
             </div>
         );
