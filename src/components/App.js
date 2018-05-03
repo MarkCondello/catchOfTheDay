@@ -5,11 +5,27 @@ import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
 import Fish from './Fish';
 
+import base from "../base";
+
 export default class App extends React.Component{
     state = {
         fishes: {},
         order: {}
     }
+
+    componentDidMount(){
+        //get the current store name
+        const {params} = this.props.match;
+        //red to firebase object which stores our data
+        this.ref = base.syncState(`${params.storeId}/fishes`, {
+            context: this,
+            state: 'fishes'
+        });
+     }
+    //avoid memory leaks if this comonent is removed
+     componentWillUnmount(){
+         base.removeBinding(this.ref);
+     }
 
     addFish = (fish) =>{
         // console.log("Adding a fish!", fish);
@@ -24,7 +40,7 @@ export default class App extends React.Component{
 
     loadSampleFishes = () =>{   
         this.setState({fishes : sampleFishes});
-        console.log("Load samples" );
+        //console.log("Load samples" );
     };
 
     addToOrder = (key) =>{
@@ -50,7 +66,7 @@ export default class App extends React.Component{
                     />)}
                 </div> 
                 <div>  
-                      <Order 
+                    <Order 
                         fishes = {this.state.fishes}
                         orders = {this.state.order}
                     />  
