@@ -16,7 +16,7 @@ export default class App extends React.Component{
     componentDidMount(){
         //get the current store name
         const {params} = this.props.match;
-        //red to firebase object which stores our data
+        //create firebase object which stores our data
         this.ref = base.syncState(`${params.storeId}/fishes`, {
             context: this,
             state: 'fishes'
