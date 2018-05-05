@@ -16,12 +16,24 @@ export default class App extends React.Component{
     componentDidMount(){
         //get the current store name
         const {params} = this.props.match;
+        //re-instate local storage
+        const localStorageRef = localStorage.getItem(params.storeId)
+        console.log(JSON.parse(localStorageRef));
+        if(localStorageRef){
+            this.setState({order: JSON.parse(localStorageRef)});
+        }
         //create firebase object which stores our data
         this.ref = base.syncState(`${params.storeId}/fishes`, {
             context: this,
             state: 'fishes'
         });
      }
+
+     componentDidUpdate(){
+         //set the local store to the storeName and the order state object
+         localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
+     }
+
     //avoid memory leaks if this comonent is removed
      componentWillUnmount(){
          base.removeBinding(this.ref);
