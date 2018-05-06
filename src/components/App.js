@@ -18,7 +18,7 @@ export default class App extends React.Component{
         const {params} = this.props.match;
         //re-instate local storage
         const localStorageRef = localStorage.getItem(params.storeId)
-        console.log(JSON.parse(localStorageRef));
+        //console.log(JSON.parse(localStorageRef));
         if(localStorageRef){
             this.setState({order: JSON.parse(localStorageRef)});
         }
@@ -35,7 +35,7 @@ export default class App extends React.Component{
      }
 
     //avoid memory leaks if this comonent is removed
-     componentWillUnmount(){
+    componentWillUnmount(){
          base.removeBinding(this.ref);
      }
 
@@ -48,6 +48,15 @@ export default class App extends React.Component{
         NewFish[`fish${Date.now()}`] = fish;
         //3. set the newFish object to state
         this.setState({fishes : NewFish});
+    };
+
+    updateFish = (key, updatedFish) =>{
+        //grab the current fish state
+        const newFishes = {...this.state.fishes};
+        //updated state value
+        newFishes[key] = updatedFish;
+        //set the state
+        this.setState({fishes: newFishes});
     };
 
     loadSampleFishes = () =>{   
@@ -83,7 +92,12 @@ export default class App extends React.Component{
                         orders = {this.state.order}
                     />  
                 </div> 
-                <Inventory loadSampleFishes={this.loadSampleFishes} addFish={this.addFish}/>
+                <Inventory 
+                    loadSampleFishes={this.loadSampleFishes}
+                    addFish={this.addFish} 
+                    fishes={this.state.fishes}
+                    updateFish={this.updateFish}
+                />
             </div>
         );
     }
