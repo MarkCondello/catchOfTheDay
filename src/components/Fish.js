@@ -8,7 +8,7 @@ export default class Fish extends React.Component{
     }
 
     render(){
-        {console.log(this.props.details.name)}
+        {/*console.log(this.props.details.name)*/}
         const {image, name, price, desc , status} = this.props.details;
         const isAvailable = status === 'available'; 
         return(
